@@ -1,0 +1,82 @@
+<!DOCType HTML>
+<html>
+	<head>
+		<title>Big Black Card Generator</title>
+		<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
+		<link rel="stylesheet" href="w3.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="scores.js"></script>
+		<script src="cards.js"></script>
+		<script>
+			$(document).ready( function() {
+				$("#packSubmit").on("click", function() {
+					$('input[name=pack]:checked').each(function(index,element) {
+						loadPack(packList[element.value], cardPool);
+					})
+			    });
+
+			    $("#playerSubmit").on("click", function() {
+			    	$inputName = $("input[name=playerName]").val();
+			    	$removeFunc = `removePlayer("` + $inputName + `", gameScoreboard)`;
+			    	if (addPlayer($inputName, gameScoreboard) == 1) {
+			    		//Successfully added player to scoreboard, add player name to list
+			    		$("#playerList").append("<li>" + $inputName + "<input class='players' type='button' value='-' onclick='" + $removeFunc + "' ></li>");
+			    		$("#errorPlayer").remove();
+			    	}
+			    	else if( $("#errorPlayer").length == 0 ) {
+			    		//Player already exists, check if error message already present
+		    			$("#playerSubmit").after("<div id='errorPlayer' class='w3-text-red'>That player already exists!</div>");
+			    	}
+			    });
+
+			    $(document).on('click','input.players',function() {
+				    $(this).parent().remove();
+				});
+		    });
+		</script>
+	</head>
+	
+	<body>
+	<div id="title" class="w3-black w3-text-white">
+		<h1>Cards Against Humanity Black Card Generator</h1>
+	</div>	
+
+	<div id="startUp" class="tab">
+	<button type="button" autofocus onclick="menuPack()">Start New Game</button>
+	</div>
+
+	<div id="packSelect" class="tab" style="display:none">
+		<h2 class="w3-black w3-text-white">Select packs to use:</h2>
+		<h3 class="w3-black w3-text-white">Base Packs</h3>
+		<div id="base">
+		</div>
+		
+		<h3 class="w3-black w3-text-white">Expansion Packs</h3>
+		<div id="expan">
+		</div>
+
+		<h3 class="w3-black w3-text-white">Misc Packs</h3>
+		<div id="misc">
+		</div>
+
+		<input id="packSubmit" type="button" value="Done" onclick="menuPlayer()">
+	</div>
+
+	<div id="addPlayers" class="tab" style="display:none">
+		<h2>Players:</h2>
+		<input type="text" name="playerName" value="Player"><input id="playerSubmit" type="button" value="Add">
+		<ul id="playerList">
+
+		</ul>
+		<input id="playerFinished" type="button" value="Start the game" onclick="menuGame()">
+  	</div>
+
+	<div id="playGame" class="tab" style="display:none">
+		<h2>Play!</h2>
+		<input type="button" id="drawCard">
+
+  	</div>
+
+  	</body>
+
+</html>
