@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Big Black Card Generator</title>
+		<meta charset="UTF-8">
 		<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 		<link rel="stylesheet" href="w3.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -30,8 +31,22 @@
 			    });
 
 			    $(document).on('click','input.players',function() {
+			    	//Removes a player by removing the parent div element when a button is clicked
 				    $(this).parent().remove();
 				});
+
+				$("#drawCard").on("click", function() {
+					//When button pressed, replaces text with a random card
+					$("#cardHolder").text(drawCard(cardPool));
+				});
+
+		    	$("#toggleScoreboard").on("click", function() {
+					$("#scoreboard").toggle();
+		    	});
+
+		    	$(document).on('click',"li.playerScores",function() {
+			    	drawScoreboard(gameScoreboard);
+			    });
 		    });
 		</script>
 	</head>
@@ -62,7 +77,7 @@
 		<input id="packSubmit" type="button" value="Done" onclick="menuPlayer()">
 	</div>
 
-	<div id="addPlayers" class="tab" style="display:none">
+	<div id="addPlayers" class="tab" style="display: none">
 		<h2>Players:</h2>
 		<input type="text" name="playerName" value="Player"><input id="playerSubmit" type="button" value="Add">
 		<ul id="playerList">
@@ -71,9 +86,15 @@
 		<input id="playerFinished" type="button" value="Start the game" onclick="menuGame()">
   	</div>
 
-	<div id="playGame" class="tab" style="display:none">
+	<div id="playGame" class="tab" style="display: none">
 		<h2>Play!</h2>
-		<input type="button" id="drawCard">
+		<input type="button" id="drawCard" value="Draw Card">
+		<input type="button" id="toggleScoreboard" value="Toggle Scoreboard">
+		<div id="scoreboard" style="display: none">
+			<ul id="scoreList">
+			</ul>
+		</div>
+		<div id="cardHolder"></div>
 
   	</div>
 

@@ -44,8 +44,13 @@ function removeWin(playerName, wins = 1, scoreboard) {
 		//Removes a specified number of points from the specified player's score
 	for (var i = 0; i < scoreboard.length; i++) {
 		if (scoreboard[i].player == playerName) {
-			scoreboard[i].score -= wins;
-			console.log(scoreboard[i].player + " traded in their hand and lost " + wins + " points!");
+			if(scoreboard[i].score > 0) {
+				scoreboard[i].score -= wins;
+				console.log(scoreboard[i].player + " traded in their hand and lost " + wins + " point!");
+			}
+			else {
+				console.log("WARNING: Player already on 0 points!")
+			}
 			return;
 		}
 	}
@@ -58,6 +63,15 @@ function sortScores(arry) {
 	return arry.sort(
 		function(a,b){return b.score-a.score}
 	)
+}
+
+function showPlayerScore(playerName, scoreboard) {
+	for (var i = 0; i < scoreboard.length; i++) {
+		if(scoreboard[i].player == playerName) {
+			return (playerName + ": " + scoreboard[i].score);
+		}
+	}
+	console.log("ERROR: Player not found!")
 }
 
 function printScoreboard(scoreboard) {
@@ -104,6 +118,16 @@ function printScoreboard(scoreboard) {
 
 }
 
+function drawScoreboard(scoreArry) {
+	var scoreList = $("#scoreList");
+    scoreList.empty();
+    for (var i = 0; i < scoreArry.length; i++) {
+    	var player = scoreArry[i].player;
+    	var score = scoreArry[i].score;
+    	scoreList.append('<li class="playerScores">'+ player +' : '+ score+'<input type="button" id="win" value="+" onClick="addWin(`' + player +'`, 1, gameScoreboard)"><input type="button" id="tradeIn" value="-" onClick="removeWin(`' + player +'`, 1, gameScoreboard)"></li>');
+    }
+}
+
 function resetScoreboard(scoreboard) {
 	//Function to reset scoreboard
 	scoreboard = [];
@@ -115,21 +139,3 @@ function resetPlayer(playerName, scoreboard) {
 		if (scoreboard[i].player == playerName) scoreboard[i].score = 0;
 	}
 }
-
-// addPlayer("Paul", gameScoreboard);
-// addPlayer("Jasper", gameScoreboard);
-// addPlayer("Dell", gameScoreboard);
-// addPlayer("Hannah", gameScoreboard);
-
-// addWin("Paul", 1, gameScoreboard);
-// addWin("Jasper", 1, gameScoreboard);
-
-// printScoreboard(gameScoreboard);
-
-// addWin("Dell", 4, gameScoreboard);
-
-// printScoreboard(gameScoreboard);
-
-// removeWin("Dell", 1, gameScoreboard);
-
-// printScoreboard(gameScoreboard);

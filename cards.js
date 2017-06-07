@@ -95,6 +95,7 @@ function menuPlayer() {
 
 function menuGame() {
 	changeTab("playGame");
+	drawScoreboard(gameScoreboard);
 	console.log("Game started!");
 }
 
