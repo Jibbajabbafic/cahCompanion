@@ -51,33 +51,32 @@ function loadPack(packObj, cardArry) {
 
 function populatePackList(packArry) {
 	//Fill the pack list with the available packs
-	var inputEl, node, element;
+	//var inputEl, node, element;
 
 	for (var i = 0; i < packArry.length; i++) {
-		inputEl = document.createElement("input");
-		inputEl.setAttribute("type", "checkbox");
-		inputEl.setAttribute("name", "pack");
-		inputEl.setAttribute("value", i);
+		// inputEl = document.createElement("input");
+		// inputEl.setAttribute("type", "checkbox");
+		// inputEl.setAttribute("name", "pack");
+		// inputEl.setAttribute("value", i);
 
-		node = document.createTextNode(packArry[i].name);
+		// node = document.createTextNode(packArry[i].name);
 
-		element = document.getElementById(packArry[i].cat);
-		element.appendChild(inputEl);
-		element.appendChild(node);
+		// element = document.getElementById(packArry[i].cat);
+		// element.appendChild(inputEl);
+		// element.appendChild(node);
 
-		brEl = document.createElement("br");
-		element.appendChild(brEl);
+		// brEl = document.createElement("br");
+		// element.appendChild(brEl);
+		var id = "#" + packArry[i].cat;
+		$(id).append("<input type='checkbox' name='pack' value='" + i + "'>" + packArry[i].name + "<br>");
 	}
 }
 
 function changeTab(tabName) {
 	//Switch active tab to element with id tabName
-	var e = document.getElementsByClassName("tab");
-	for (var i = 0; i < e.length; i++) {
-		e[i].style.display = "none";
-	}
-	var x = document.getElementById(tabName);
-	x.style.display = "block";
+	var id = "#" + tabName;
+	$(".tab").hide();
+	$(id).show();
 }
 
 function menuPack() {
@@ -94,6 +93,7 @@ function menuPlayer() {
 }
 
 function menuGame() {
+	//Switch to the game area to draw cards and use the scoreboard
 	changeTab("playGame");
 	drawScoreboard(gameScoreboard);
 	console.log("Game started!");
@@ -117,7 +117,7 @@ var packList = [
 		name: "Base Game 1",
 		cat: "base",
 		path: "base1.txt",
-		enabled: true,
+		enabled: false,
 		loaded: false
 	},
 

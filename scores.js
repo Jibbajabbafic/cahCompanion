@@ -124,7 +124,7 @@ function drawScoreboard(scoreArry) {
     for (var i = 0; i < scoreArry.length; i++) {
     	var player = scoreArry[i].player;
     	var score = scoreArry[i].score;
-    	scoreList.append('<li class="playerScores">'+ player +' : '+ score+'<input type="button" id="win" value="+" onClick="addWin(`' + player +'`, 1, gameScoreboard)"><input type="button" id="tradeIn" value="-" onClick="removeWin(`' + player +'`, 1, gameScoreboard)"></li>');
+    	scoreList.append('<li class="playerScores"><input type="button" id="win" value="+" onClick="addWin(`' + player +'`, 1, gameScoreboard)"><input type="button" id="tradeIn" value="-" onClick="removeWin(`' + player +'`, 1, gameScoreboard)">'+ player +' : '+ score+'</li>');
     }
 }
 
