@@ -26,7 +26,7 @@ function loadPack(packObj, cardArry) {
 		    }
 		};
 
-		xhttp.open("GET", "/blackCards/" + packObj.path, true);
+		xhttp.open("GET", "blackCards/" + packObj.path, true);
 		xhttp.send();
 	}
 }
