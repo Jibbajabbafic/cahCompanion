@@ -226,9 +226,25 @@ var packList = [
 	},				
 
 	{
+		name: "The Sci-Fi Pack",
+		cat: "misc",
+		path: "miscSciFi.txt",
+		enabled: false,
+		loaded: false
+	},
+
+	{
 		name: "The Science Pack",
 		cat: "misc",
 		path: "miscScience.txt",
+		enabled: false,
+		loaded: false
+	},
+
+	{
+		name: "The World Wide Web Pack",
+		cat: "misc",
+		path: "miscWWW.txt",
 		enabled: false,
 		loaded: false
 	},
