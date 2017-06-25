@@ -3,7 +3,29 @@
 	<head>
 		<title>Big Black Card Generator.</title>
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
+		
+		<!-- Favicon stuff -->
+		<link rel="shortcut icon" href="/favicon/favicon.ico">
+		<link rel="icon" sizes="16x16 32x32 64x64" href="/favicon/favicon.ico">
+		<link rel="icon" type="image/png" sizes="196x196" href="/favicon/favicon-192.png">
+		<link rel="icon" type="image/png" sizes="160x160" href="/favicon/favicon-160.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96.png">
+		<link rel="icon" type="image/png" sizes="64x64" href="/favicon/favicon-64.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16.png">
+		<link rel="apple-touch-icon" href="/favicon/favicon-57.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/favicon/favicon-114.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/favicon/favicon-72.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/favicon/favicon-144.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/favicon/favicon-60.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/favicon/favicon-120.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/favicon/favicon-76.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicon/favicon-152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/favicon-180.png">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+		<meta name="msapplication-TileImage" content="/favicon/favicon-144.png">
+		<meta name="msapplication-config" content="/favicon/browserconfig.xml">
+
 		<link rel="stylesheet" href="w3.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="scores.js"></script>
@@ -18,11 +40,12 @@
 			    });
 
 			    $("#playerSubmit").on("click", function() {
+			    	//Adds a player to the scoreboard
 			    	$inputName = $("input[name=playerName]").val();
 			    	$removeFunc = `removePlayer("` + $inputName + `", gameScoreboard)`;
 			    	if (addPlayer($inputName, gameScoreboard) == 1) {
 			    		//Successfully added player to scoreboard, add player name to list
-			    		$("#playerList").append("<li type='none' class='w3-padding'><input class='players w3-btn w3-round-large w3-white w3-hover-red w3-hover-text-white w3-text-red' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputName + "</li>");
+			    		$("#playerList").append("<li type='none' class='w3-padding'><input class='players button-remove' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputName + "</li>");
 			    		$("#errorPlayer").hide();
 			    	}
 			    	else {
@@ -42,10 +65,12 @@
 				});
 
 		    	$("#toggleScoreboard").on("click", function() {
+		    		//Toggles scoreboard when clicked
 					$("#scoreboard").toggle();
 		    	});
 
 		    	$(document).on('click',"li.playerScores",function() {
+		    		//Updates the scoreboard whenever any buttons in it are clicked
 			    	drawScoreboard(gameScoreboard);
 			    });
 		    });
@@ -53,12 +78,12 @@
 	</head>
 	
 	<body>
-	<div id="title" class="w3-black w3-text-white w3-card-2 w3-center">
+	<div id="title" class="CAH-card">
 		<h1><b>Cards Against Humanity Black Card Generator.</b></h1>
 	</div>	
 
 	<div id="startUp" class="tab w3-center">
-	<button type="button" class="w3-large w3-block w3-btn w3-round-large w3-black w3-text-white" autofocus onclick="menuPack()"><b>Start New Game.</b></button>
+	<button type="button" autofocus onclick="menuPack()"><b>Start New Game.</b></button>
 	</div>
 
 	<div id="packSelect" class="tab w3-display-container" style="display:none">
@@ -102,7 +127,7 @@
 		<input type="button" id="drawCard" class="w3-btn w3-round-large w3-black w3-text-white" value="Draw Card">
 		<input type="button" id="toggleScoreboard" class="w3-btn w3-round-large w3-black w3-text-white" value="Toggle Scoreboard">
 		</div>
-		<div id="scoreboard" class="w3-display-left" style="display: none">
+		<div id="scoreboard" class="w3-display-left w3-round-large w3-black w3-padding w3-text-white w3-card-4" style="display: none">
 			<ul id="scoreList" class="w3-ul">
 			</ul>
 		</div>
