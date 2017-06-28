@@ -68,7 +68,7 @@ function populatePackList(packArry) {
 		// brEl = document.createElement("br");
 		// element.appendChild(brEl);
 		var id = "#" + packArry[i].cat;
-		$(id).append("<input type='checkbox' name='pack' class='w3-check' value='" + i + "'><b>" + packArry[i].name + ".</b><br>");
+		$(id).append("<input type='checkbox' name='pack' class='card-check' value='" + i + "'>" + packArry[i].name + ".<br>");
 	}
 }
 

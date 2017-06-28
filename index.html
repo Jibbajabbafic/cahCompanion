@@ -26,13 +26,14 @@
 		<meta name="msapplication-TileImage" content="/favicon/favicon-144.png">
 		<meta name="msapplication-config" content="/favicon/browserconfig.xml">
 
-		<link rel="stylesheet" href="w3.css">
+		<link rel="stylesheet" href="cahStyle.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="scores.js"></script>
 		<script src="cards.js"></script>
 		<script>
 			$(document).ready( function() {
 				$("#packSubmit").on("click", function() {
+					//Loads card packs which have been ticked
 					$('input[name=pack]:checked').each(function(index,element) {
 						packList[element.value].enabled = true;
 						loadPack(packList[element.value], cardPool);
@@ -45,7 +46,7 @@
 			    	$removeFunc = `removePlayer("` + $inputName + `", gameScoreboard)`;
 			    	if (addPlayer($inputName, gameScoreboard) == 1) {
 			    		//Successfully added player to scoreboard, add player name to list
-			    		$("#playerList").append("<li type='none' class='w3-padding'><input class='players button-remove' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputName + "</li>");
+			    		$("#playerList").append("<li type='none' class=''><input class='players button-remove' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputName + "</li>");
 			    		$("#errorPlayer").hide();
 			    	}
 			    	else {
@@ -61,7 +62,7 @@
 
 				$("#drawCard").on("click", function() {
 					//When button pressed, replaces text with a random card
-					$("#cardText").text(drawCard(cardPool));
+					$("#cardText").html(drawCard(cardPool));
 				});
 
 		    	$("#toggleScoreboard").on("click", function() {
@@ -78,66 +79,76 @@
 	</head>
 	
 	<body>
-	<div id="title" class="CAH-card">
-		<h1><b>Cards Against Humanity Black Card Generator.</b></h1>
-	</div>	
+		<div id="title" class="title-banner">
+			<h1>Cards Against Humanity Black Card Generator.</h1>
+		</div>	
 
-	<div id="startUp" class="tab w3-center">
-	<button type="button" autofocus onclick="menuPack()"><b>Start New Game.</b></button>
-	</div>
 
-	<div id="packSelect" class="tab w3-display-container" style="display:none">
-		<h3 class="w3-black w3-text-white w3-card-2 w3-center"><b>Select packs to use.</b></h3>
-		<div class="w3-cell-row w3-table">
-			<div id="base" class="w3-cell w3-card-2 w3-mobile w3-round-large w3-padding-large w3-black w3-text-white">
-			<h2><b>Base Packs.</b></h2>
+
+		<div id="startUp" class="tab">
+			<button autofocus class="button-wide" onclick="menuPack()">Start new game.</button>
+		</div>
+
+
+
+		<div id="packSelect" class="tab" style="display:none">
+			<h3 class="top-message">Select packs to use.</h3>
+			<div class="card-category-holder">
+				<div id="base" class="card-category">
+					<h2>Base Packs.</h2>
+				</div>
+							
+				<div id="expan" class="card-category">
+					<h2>Expansion Packs.</h2>
+				</div>
+
+				<div id="misc" class="card-category">
+					<h2>Misc Packs.</h2>
+				</div>
+			</div>
+
+			<button class="button-wide" id="packSubmit" onclick="menuPlayer()">Done.</button>
+		</div>
+
+
+
+		<div id="addPlayers" class="tab" style="display: none">
+			<h3 class="top-message">Add players.</h3>
+			<div class="player-button-holder">
+				<input type="text" id="playerTextbox" name="playerName" placeholder="Player name">
+				<button id="playerSubmit">Add</button>
 			</div>
 			
-			
-			<div id="expan" class="w3-cell w3-card-2 w3-mobile w3-round-large w3-padding-large w3-black w3-text-white">
-			<h2><b>Expansion Packs.</b></h2>
+			<div>
+				<div id='errorPlayer' style="display: none">Player already exists!</div>
+				<div class="player-list-holder">
+					<ul id="playerList" class="player-list">
+					</ul>
+				</div>
 			</div>
 
-			
-			<div id="misc" class="w3-cell w3-card-2 w3-mobile w3-round-large w3-padding-large w3-black w3-text-white">
-			<h2><b>Misc Packs.</b></h2>
+			<div class="cont-centered">
+				<button id="playerFinished" class="button-wide" onclick="menuGame()">Start the game.</button>
 			</div>
-		</div>
+	  	</div>
 
-		<div class="w3-center w3-padding">
-			<input id="packSubmit" class="w3-btn w3-round-large w3-block w3-black w3-text-white" type="button" value="Done." onclick="menuPlayer()">
-		</div>
-		
-	</div>
 
-	<div id="addPlayers" class="tab w3-black w3-text-white w3-round-large" style="display: none; width: 75%">
-		<h2><b>Players.</b></h2>
-		<input type="text" name="playerName" class="w3-card-2" value="Player"><input id="playerSubmit" type="button" class="w3-round-large w3-btn w3-round-large w3-black w3-text-white" value="Add">
-		<div id='errorPlayer' class='w3-panel w3-red' style="display: none">That player already exists!</div>
-		<ul id="playerList" class="w3-ul w3-card-2">
 
-		</ul>
-		<br>
-		<input id="playerFinished" type="button" class="w3-btn w3-round-large w3-black w3-text-white" value="Start the game." onclick="menuGame()">
-  	</div>
+		<div id="playGame" class="tab" style="display: none">
+			<h3 class="top-message">Play.</h3>
+			<div class="top-message">
+				<button id="drawCard" class="">Draw Card</button>
+				<button id="toggleScoreboard" class="">Toggle Scoreboard</button>
+			</div>
 
-	<div id="playGame" class="tab w3-round-large " style="display: none">
-		<div class="w3-center w3-black w3-text-white">
-		<h2><b>Play.</b></h2>
-		<input type="button" id="drawCard" class="w3-btn w3-round-large w3-black w3-text-white" value="Draw Card">
-		<input type="button" id="toggleScoreboard" class="w3-btn w3-round-large w3-black w3-text-white" value="Toggle Scoreboard">
-		</div>
-		<div id="scoreboard" class="w3-display-left w3-round-large w3-black w3-padding w3-text-white w3-card-4" style="display: none">
-			<ul id="scoreList" class="w3-ul">
-			</ul>
-		</div>
-		<br>
-		<div id="cardHolder" class="w3-row">
-			<div class="w3-container w3-round-large w3-black w3-padding w3-text-white w3-card-4 w3-left w3-display-bottommiddle" style="width: 26%; height: 70%"><h4 class="w3-padding-large"><b id="cardText"></b></h4></div>
-		</div>
-
-  	</div>
-
+			<div id="scoreboard" class="scoreboard-holder" style="display: none">
+				<ul id="scoreList" class="player-list">
+				</ul>
+			</div>
+			<br>
+			<div id="cardHolder">
+				<h4 id="cardText"></h4>
+			</div>
+	  	</div>
   	</body>
-
 </html>
