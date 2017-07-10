@@ -32,26 +32,76 @@
 		<script src="cards.js"></script>
 		<script>
 			$(document).ready( function() {
+				$("#packSelectAll").on('click', function(){
+					//Selects all packs for play
+					$(":checkbox").prop('checked', true);
+					console.log("Selected all packs!");
+				});
+
+				$("#packDeselectAll").on('click', function(){
+					//Deselect all packs
+					$(":checkbox").prop('checked', false);
+					console.log("Deselected all packs!");
+				});
+
 				$("#packSubmit").on("click", function() {
 					//Loads card packs which have been ticked
-					$('input[name=pack]:checked').each(function(index,element) {
-						packList[element.value].enabled = true;
-						loadPack(packList[element.value], cardPool);
-					})
+					if ($('input[name=pack]:checked').length > 0) {
+						//Check if packs selected
+						$('input[name=pack]:checked').each(function(index,element) {
+							packList[element.value].enabled = true;
+							loadPack(packList[element.value], cardPool);
+						});
+						//Hide error message
+						$('#errorPacksEmpty').hide();
+						menu('player');
+					}
+					else {
+						//Show no packs selected error message
+						$('#errorPacksEmpty').show();
+						console.log("ERROR: No packs selected!");
+					}
+			    });
+
+			    $("div.card-category-holder").on("click", "input.card-check" , function() {
+			    	//Hide pack error message when box ticked
+			    	$("#errorPacksEmpty").hide();
 			    });
 
 			    $("#playerSubmit").on("click", function() {
-			    	//Adds a player to the scoreboard
-			    	$inputName = $("input[name=playerName]").val();
-			    	$removeFunc = `removePlayer("` + $inputName + `", gameScoreboard)`;
-			    	if (addPlayer($inputName, gameScoreboard) == 1) {
-			    		//Successfully added player to scoreboard, add player name to list
-			    		$("#playerList").append("<li type='none' class=''><input class='players button-remove' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputName + "</li>");
-			    		$("#errorPlayer").hide();
+			    	//Validates name and adds a player to the scoreboard
+			    	var maxNameLength = 20;
+
+			    	$inputNameVal = $("input[name=playerName]").val();
+			    	if ($inputNameVal.length == 0) {
+			    		//Name is empty
+			    		console.log("ERROR: Player name can't be empty!");
+			    		//Hide other error messages and show name too short error
+			    		$(".error-player").hide();
+			    		$("#errorNameShort").show();
+			    	}
+			    	else if ($inputNameVal.length > maxNameLength) {
+			    		//Name is longer than max name length
+			    		console.log("ERROR: Player name can't be longer than " + maxNameLength + " characters!");
+			    		//Hide other error messages and show name too long error
+			    		$(".error-player").hide();
+			    		$("#errorNameLong").show();
 			    	}
 			    	else {
-			    		//Player already exists, check if error message already present
-		    			$("#errorPlayer").show();
+			    		//Otherwise assume it is valid and add player to scoreboard
+				    	if (addPlayer($inputNameVal, gameScoreboard) == 1) {
+				    		//Successfully added player to scoreboard, add player name to list with remove function too
+				    		$removeFunc = `removePlayer("` + $inputNameVal + `", gameScoreboard)`;
+				    		$("#playerList").append("<li type='none' class=''><input class='players button-remove' type='button' value='&times;' onclick='" + $removeFunc + "' >    " + $inputNameVal + "</li>");
+				    		//Hide error messages if successful
+				    		$(".error-player").hide();
+				    	}
+				    	else {
+				    		//Name already exists
+				    		//Hide other error messages and show name exists error
+				    		$(".error-player").hide();
+			    			$("#errorNameExists").show();
+				    	}
 			    	}
 			    });
 
@@ -86,7 +136,7 @@
 
 
 		<div id="startUp" class="tab">
-			<button autofocus class="button-wide" onclick="menuPack()">Start new game.</button>
+			<button autofocus class="button-wide" onclick="menu('pack')">Start new game.</button>
 		</div>
 
 
@@ -106,8 +156,12 @@
 					<h2>Misc Packs.</h2>
 				</div>
 			</div>
-
-			<button class="button-wide" id="packSubmit" onclick="menuPlayer()">Done.</button>
+			<div class="button-holder">
+			<div class='error-message error-packs' id='errorPacksEmpty'>You have to choose at least one pack!</div>
+			<button class="button-wide" id="packSelectAll">Select All.</button>
+			<button class="button-wide" id="packDeselectAll">Remove All.</button>
+			<button class="button-wide" id="packSubmit">Done.</button>
+			</div>
 		</div>
 
 
@@ -120,7 +174,9 @@
 			</div>
 			
 			<div>
-				<div id='errorPlayer' style="display: none">Player already exists!</div>
+				<div class='error-message error-player' id='errorNameExists'>That player already exists!</div>
+				<div class='error-message error-player' id='errorNameShort'>Your name can't be empty!</div>
+				<div class='error-message error-player' id='errorNameLong'>Your name is too long!</div>
 				<div class="player-list-holder">
 					<ul id="playerList" class="player-list">
 					</ul>
@@ -128,7 +184,7 @@
 			</div>
 
 			<div class="cont-centered">
-				<button id="playerFinished" class="button-wide" onclick="menuGame()">Start the game.</button>
+				<button id="playerFinished" class="button-wide" onclick="menu('game')">Start the game.</button>
 			</div>
 	  	</div>
 

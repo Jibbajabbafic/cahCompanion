@@ -51,22 +51,7 @@ function loadPack(packObj, cardArry) {
 
 function populatePackList(packArry) {
 	//Fill the pack list with the available packs
-	//var inputEl, node, element;
-
 	for (var i = 0; i < packArry.length; i++) {
-		// inputEl = document.createElement("input");
-		// inputEl.setAttribute("type", "checkbox");
-		// inputEl.setAttribute("name", "pack");
-		// inputEl.setAttribute("value", i);
-
-		// node = document.createTextNode(packArry[i].name);
-
-		// element = document.getElementById(packArry[i].cat);
-		// element.appendChild(inputEl);
-		// element.appendChild(node);
-
-		// brEl = document.createElement("br");
-		// element.appendChild(brEl);
 		var id = "#" + packArry[i].cat;
 		$(id).append("<input type='checkbox' name='pack' class='card-check' value='" + i + "'>" + packArry[i].name + ".<br>");
 	}
@@ -79,24 +64,33 @@ function changeTab(tabName) {
 	$(id).show();
 }
 
-function menuPack() {
-	//Switch to pack selection menu, populates list with available packs dynamically
-	populatePackList(packList);
-	changeTab("packSelect");
-	console.log("Selecting packs!");
-}
+function menu(menuName) {
+	var logMessage = "";
+	switch(menuName) {
+		case "pack":
+			//Switch to pack selection menu, populates list with available packs dynamically
+			populatePackList(packList);
+			changeTab("packSelect");
+			logMessage = "Selecting packs!";
+		break;
+		
+		case "player":
+			//Switch to player adding menu, add and remove desired number of players
+			changeTab("addPlayers");
+			logMessage = "Adding players!";
+		break;
 
-function menuPlayer() {
-	//Switch to player adding menu, add and remove desired number of players
-	changeTab("addPlayers");
-	console.log("Adding players!");
-}
+		case "game":
+			//Switch to the game area to draw cards and use the scoreboard
+			changeTab("playGame");
+			drawScoreboard(gameScoreboard);
+			logMessage = "Game started!";
+		break;
 
-function menuGame() {
-	//Switch to the game area to draw cards and use the scoreboard
-	changeTab("playGame");
-	drawScoreboard(gameScoreboard);
-	console.log("Game started!");
+		default:
+			logMessage = "ERROR: Invalid menu name: " + menuName;
+	}
+	console.log(logMessage);
 }
 
 // function setPack(packArry, packIndex, bool) {
