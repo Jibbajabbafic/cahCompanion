@@ -9,6 +9,6 @@ When performing card pack selection, the list is populated with packs which have
 
 Cards are loaded into cardPool which can then be drawn from using drawCard().
 
-All of the jQuery is currently in the HTML file and most of the other javascript is in cards.js. Scripts for the scoreboard are all kept in scores.js to keep them seperate from card related stuff.
+All of the jQuery is currently in the HTML file and most of the other javascript is in cards.js. Scripts for the scoreboard are all kept in scores.js to keep them seperate from card related stuff. All CSS is in the cahStyle.css file as well.
 
 Have fun!
