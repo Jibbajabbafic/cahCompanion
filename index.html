@@ -32,6 +32,9 @@
 		<script src="cards.js"></script>
 		<script>
 			$(document).ready( function() {
+				//Show the initial startUp tab with start button
+				$('#startUp').show();
+
 				$("#packSelectAll").on('click', function(){
 					//Selects all packs for play
 					$(":checkbox").prop('checked', true);
@@ -141,7 +144,7 @@
 
 
 
-		<div id="packSelect" class="tab" style="display:none">
+		<div id="packSelect" class="tab">
 			<h3 class="top-message">Select packs to use.</h3>
 			<div class="card-category-holder">
 				<div id="base" class="card-category">
@@ -157,23 +160,23 @@
 				</div>
 			</div>
 			<div class="button-holder">
-			<div class='error-message error-packs' id='errorPacksEmpty'>You have to choose at least one pack!</div>
-			<button class="button-wide" id="packSelectAll">Select All.</button>
-			<button class="button-wide" id="packDeselectAll">Remove All.</button>
-			<button class="button-wide" id="packSubmit">Done.</button>
+				<div class='error-message error-packs' id='errorPacksEmpty'>You have to choose at least one pack!</div>
+				<button class="button-half" id="packSelectAll">Select All.</button>
+				<button class="button-half" id="packDeselectAll">Remove All.</button>
+				<button class="button-wide" id="packSubmit">Done.</button>
 			</div>
 		</div>
 
 
 
-		<div id="addPlayers" class="tab" style="display: none">
+		<div id="addPlayers" class="tab">
 			<h3 class="top-message">Add players.</h3>
 			<div class="player-button-holder">
 				<input type="text" id="playerTextbox" name="playerName" placeholder="Player name">
 				<button id="playerSubmit">Add</button>
 			</div>
 			
-			<div>
+			<div class='button-holder'>
 				<div class='error-message error-player' id='errorNameExists'>That player already exists!</div>
 				<div class='error-message error-player' id='errorNameShort'>Your name can't be empty!</div>
 				<div class='error-message error-player' id='errorNameLong'>Your name is too long!</div>
@@ -190,11 +193,11 @@
 
 
 
-		<div id="playGame" class="tab" style="display: none">
+		<div id="playGame" class="tab">
 			<h3 class="top-message">Play.</h3>
-			<div class="top-message">
-				<button id="drawCard" class="">Draw Card</button>
-				<button id="toggleScoreboard" class="">Toggle Scoreboard</button>
+			<div class="menu-bar">
+				<button class="button-half" id="drawCard" class="">Draw Card</button>
+				<button class="button-half" id="toggleScoreboard" class="">Toggle Scoreboard</button>
 			</div>
 
 			<div id="scoreboard" class="scoreboard-holder" style="display: none">
@@ -206,5 +209,6 @@
 				<h4 id="cardText"></h4>
 			</div>
 	  	</div>
+
   	</body>
 </html>
